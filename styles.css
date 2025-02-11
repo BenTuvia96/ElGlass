@@ -1190,9 +1190,10 @@ footer::before {
     padding: 2rem;
   }
 
-  .nav-links {
-    display: none;
-  }
+  /* 
+       Removed .nav-links { display: none; } here
+       so the menu remains visible on mobile.
+    */
 
   .section {
     padding: 2rem 0;
