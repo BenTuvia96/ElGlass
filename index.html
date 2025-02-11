@@ -248,94 +248,54 @@
                     </button>
                     
                     <div class="recommendations-slider">
-                        <div class="recommendation-card">
+                        <div class="recommendation-card active">
                             <div class="rec-image">
                                 <img src="assets/Jpg/rec1.jpg" alt="המלצה - לקוח מרוצה" loading="lazy">
-                            </div>
-                            <div class="rec-content">
-                                <p>"עבודה מקצועית ומדהימה. התוצאה עלתה על כל הציפיות שלנו!"</p>
-                                <h4>- משפחת כהן</h4>
                             </div>
                         </div>
                         <div class="recommendation-card">
                             <div class="rec-image">
                                 <img src="assets/Jpg/rec2.jpg" alt="המלצה - פרויקט מושלם" loading="lazy">
                             </div>
-                            <div class="rec-content">
-                                <p>"שירות אדיב ומקצועי, מחירים הוגנים ותוצאה מושלמת."</p>
-                                <h4>- חברת בנייני העיר</h4>
-                            </div>
                         </div>
                         <div class="recommendation-card">
                             <div class="rec-image">
                                 <img src="assets/Jpg/rec3.jpg" alt="המלצה - עבודה מקצועית" loading="lazy">
-                            </div>
-                            <div class="rec-content">
-                                <p>"הצוות המקצועי ביותר שיצא לי לעבוד איתו. ממליץ בחום!"</p>
-                                <h4>- אדריכל דוד לוי</h4>
                             </div>
                         </div>
                         <div class="recommendation-card">
                             <div class="rec-image">
                                 <img src="assets/Jpg/rec4.jpg" alt="המלצה - שביעות רצון מלאה" loading="lazy">
                             </div>
-                            <div class="rec-content">
-                                <p>"איכות עבודה מעולה, שירות מקצועי ואמין. מומלץ בחום!"</p>
-                                <h4>- משפחת לוי</h4>
-                            </div>
                         </div>
                         <div class="recommendation-card">
                             <div class="rec-image">
                                 <img src="assets/Jpg/rec5.jpg" alt="המלצה - עיצוב מרשים" loading="lazy">
-                            </div>
-                            <div class="rec-content">
-                                <p>"העיצוב והביצוע היו מעל המצופה. תודה על השירות המעולה!"</p>
-                                <h4>- משפחת ישראלי</h4>
                             </div>
                         </div>
                         <div class="recommendation-card">
                             <div class="rec-image">
                                 <img src="assets/Jpg/rec6.jpg" alt="המלצה - פרויקט מוצלח" loading="lazy">
                             </div>
-                            <div class="rec-content">
-                                <p>"מקצועיות ללא פשרות, תוצאה מדהימה ושירות אישי מעולה."</p>
-                                <h4>- חברת אופק בנייה</h4>
-                            </div>
                         </div>
                         <div class="recommendation-card">
                             <div class="rec-image">
                                 <img src="assets/Jpg/rec7.jpg" alt="המלצה - עבודה איכותית" loading="lazy">
-                            </div>
-                            <div class="rec-content">
-                                <p>"עבודה איכותית ומקצועית, יחס אישי ותוצאה מרשימה!"</p>
-                                <h4>- משפחת אברהם</h4>
                             </div>
                         </div>
                         <div class="recommendation-card">
                             <div class="rec-image">
                                 <img src="assets/Jpg/rec8.jpg" alt="המלצה - שירות מצוין" loading="lazy">
                             </div>
-                            <div class="rec-content">
-                                <p>"שירות מצוין, מקצועיות גבוהה ותוצאה מרהיבה."</p>
-                                <h4>- משפחת דוד</h4>
-                            </div>
                         </div>
                         <div class="recommendation-card">
                             <div class="rec-image">
-                                <img src="assets/Jpg/rec9.jpg" alt="המלצה - ביצוע מושלם" loading="lazy">
-                            </div>
-                            <div class="rec-content">
-                                <p>"ביצוע מושלם, עמידה בזמנים ותוצאה מדהימה!"</p>
-                                <h4>- חברת גל בנייה</h4>
+                                <img src="assets/Jpg/rec9.jpg" alt="המלצה - עיצוע מושלם" loading="lazy">
                             </div>
                         </div>
                         <div class="recommendation-card">
                             <div class="rec-image">
                                 <img src="assets/Jpg/rec10.jpg" alt="המלצה - מקצועיות מרשימה" loading="lazy">
-                            </div>
-                            <div class="rec-content">
-                                <p>"מקצועיות מרשימה, שירות אדיב ותוצאה יוצאת מן הכלל!"</p>
-                                <h4>- משפחת יעקב</h4>
                             </div>
                         </div>
                     </div>
@@ -414,17 +374,30 @@
             const dotsContainer = document.querySelector('.rec-dots');
             
             let currentIndex = 0;
-            const totalSlides = Math.ceil(cards.length / 2);
+            const totalItems = cards.length;
             let isAnimating = false;
 
-            // Create dots
-            for (let i = 0; i < totalSlides; i++) {
+            // Initialize dots
+            cards.forEach((_, index) => {
                 const dot = document.createElement('button');
                 dot.classList.add('rec-dot');
-                dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
-                dot.addEventListener('click', () => goToSlide(i));
+                dot.setAttribute('aria-label', `Go to recommendation ${index + 1}`);
+                dot.addEventListener('click', () => goToSlide(index));
                 dotsContainer.appendChild(dot);
-            }
+            });
+
+            // Setup initial state
+            cards.forEach((card, index) => {
+                if (index === 0) {
+                    card.classList.add('active');
+                    card.style.display = 'flex';
+                    card.style.opacity = '1';
+                } else {
+                    card.classList.remove('active');
+                    card.style.display = 'none';
+                    card.style.opacity = '0';
+                }
+            });
 
             const dots = document.querySelectorAll('.rec-dot');
             updateDots();
@@ -439,34 +412,44 @@
                 if (isAnimating) return;
                 isAnimating = true;
 
+                const previousIndex = currentIndex;
                 currentIndex = index;
-                const offset = window.innerWidth <= 1024 ? 
-                    -currentIndex * (cards[0].offsetWidth + 32) :
-                    -currentIndex * (cards[0].offsetWidth * 2 + 32);
-                
-                slider.style.transform = `translateX(${offset}px)`;
-                updateDots();
 
+                // Normalize indices for circular movement
+                if (currentIndex >= totalItems) currentIndex = 0;
+                if (currentIndex < 0) currentIndex = totalItems - 1;
+
+                // Hide previous item
+                cards[previousIndex].style.opacity = '0';
+                cards[previousIndex].classList.remove('active');
+                
                 setTimeout(() => {
-                    isAnimating = false;
-                }, 500);
+                    cards[previousIndex].style.display = 'none';
+                    
+                    // Show new item
+                    cards[currentIndex].style.display = 'flex';
+                    cards[currentIndex].classList.add('active');
+                    
+                    // Trigger reflow
+                    cards[currentIndex].offsetHeight;
+                    
+                    cards[currentIndex].style.opacity = '1';
+                    
+                    updateDots();
+                    
+                    setTimeout(() => {
+                        isAnimating = false;
+                    }, 300);
+                }, 300);
             }
 
             // Navigation button handlers
             nextBtn.addEventListener('click', () => {
-                if (currentIndex < totalSlides - 1) {
-                    goToSlide(currentIndex + 1);
-                } else {
-                    goToSlide(0);
-                }
+                goToSlide(currentIndex + 1);
             });
 
             prevBtn.addEventListener('click', () => {
-                if (currentIndex > 0) {
-                    goToSlide(currentIndex - 1);
-                } else {
-                    goToSlide(totalSlides - 1);
-                }
+                goToSlide(currentIndex - 1);
             });
 
             // Touch support
@@ -483,9 +466,9 @@
                 const threshold = slider.offsetWidth * 0.2;
 
                 if (Math.abs(diff) > threshold) {
-                    if (diff > 0 && currentIndex > 0) {
+                    if (diff > 0) {
                         goToSlide(currentIndex - 1);
-                    } else if (diff < 0 && currentIndex < totalSlides - 1) {
+                    } else {
                         goToSlide(currentIndex + 1);
                     }
                 }
